@@ -18,7 +18,10 @@ fn App() -> impl IntoView
     let (budget, set_budget) = signal(Vec::<Budget>::new());
     let (counter, set_counter) = signal(0);
 
-    let total_budget += budget.get();
+    let total_amount = Memo::new(move |_|
+    {
+        budget.get().iter().map(|x| x.value).sum::<f64>()
+    });
     view!
     {
         <main>
@@ -58,18 +61,19 @@ fn App() -> impl IntoView
 
                 <section id="money-display">
                     <h1> "Budget Listed" </h1>
+                    <h2> "Total: ₱"{move || total_amount.get().abs()}</h2>
                     <For
                         each = move || budget.get()
                         key = |budget| budget.id
                         children = move |budget|
                         {
-                            
                             view!
                             {
                                 <div class="block">
                                     <p> {budget.title} </p>
                                     <p>"₱"{budget.value} </p>
                                 </div>
+
                             }
                         }
                     />
