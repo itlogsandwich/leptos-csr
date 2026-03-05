@@ -1,0 +1,50 @@
+#header-fr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: #D2D5DD;
+}
+
+#main-body {
+  display: flex;
+  height: 100vh;
+}
+
+#input-body {
+  background-color: #B8BACF;
+  flex: 2;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+#input-card {
+  background-color:#B8BACD;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 500px;
+  border-style: solid;
+  border-width: soft;
+  justify-content: center;
+  align-items: center;
+}
+#money-display {
+  background-color: #798071;
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.block {
+  border-style: solid;
+  border-width: medium;
+  padding: 10px;
+  margin: 4px;
+  font-size: 25px;
+}
