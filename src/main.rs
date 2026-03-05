@@ -1,39 +1,63 @@
 use leptos::prelude::*;
 use leptos::mount::mount_to_body;
 
+
+#[derive(Debug, Clone, Default)]
+pub struct Money
+{
+    id: u64,
+    value: f64, 
+}
+
 #[component]
 fn App() -> impl IntoView
 {
-    let (count, set_count) = signal(0);
+    let (money, set_money) = signal(0.0);
+    let (tracker, set_tracker) = signal(Vec::<Money>::new());
+    let (counter, set_counter) = signal(0);
+
     view!
     {
-        <div class="btn-ctn">
-            <h1> "Hello, World! - Leptos Running fr" </h1>
-            <button 
-                on:click= move |_| set_count.update(|x| *x += 1)
-                class:btn=move || count.get() % 2 == 0
-            > 
-                "Click this button to it move fr: "
-                {count}
-            </button>
-            <progress 
-                max="100"
-                value=move || count.get()
-            />
-        </div> 
-        
-        <div class="p-ctn">
-            <label class=("p-test", move || (count.get() * 2) % 10 == 0)>
-                "Beep Boop doubled: "
-                {move || count.get() * 2}
-            </label>
-            <progress 
-                max="200"
-                value=move || count.get() * 2
-            />
-        </div>
-    }
+        <main>
+            <header>
+                "Financial Tracker"
+            </header>
+            <section id="input-body" >
+                <input type ="numeric" on:input=move |event| 
+                {
+                    let val = event_target_value(&event).parse::<f64>();
+                    set_money.set(val.expect("Should be money fr"));
+                }/>
 
+                <button on:click=move |_| 
+                {
+                    set_counter.set(counter.get() + 1);
+                    set_tracker.write().push(Money
+                    {
+                        id: counter.get(),
+                        value: money.get(),
+                    });
+                }>
+                    "Add Money"
+                </button>
+            </section>
+            <section id="money-display">
+                <For
+                    each = move || tracker.get()
+                    key = |tracker| tracker.id
+                    children = move |tracker|
+                    {
+                        view!
+                        {
+                            <div> 
+                                "₱"{tracker.value}
+                            </div>
+                        }
+                    }
+                />
+            </section>
+        </main>
+    }
 }
 fn main() 
 {
