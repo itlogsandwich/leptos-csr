@@ -11,6 +11,29 @@ pub struct Budget
 }
 
 #[component]
+fn ListDisplay(signal: Signal<Vec<Budget>>) -> impl IntoView
+{
+    let budget = signal;
+    view!
+    {
+        <For
+            each = move || budget.get()
+            key = |budget| budget.id
+            children = move |budget|
+            {
+                view!
+                {
+                    <div class="block">
+                        <p> {budget.title} </p>
+                        <p>"₱"{budget.value} </p>
+                    </div>
+                }
+            }
+        />
+    }
+}
+
+#[component]
 fn App() -> impl IntoView
 {
     let (title, set_title) = signal(String::new());
@@ -22,24 +45,25 @@ fn App() -> impl IntoView
     {
         budget.get().iter().map(|x| x.value).sum::<f64>()
     });
+
     view!
     {
         <main>
-            <header id="header-fr">
-                <h1>"Budget Tracker"</h1>
-            </header>
-
             <div id="main-body">
                 <section id="input-body" >
                     <div id="input-card">
+                        <div id="merchant-image">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/1/1d/The_Happy_Merchant.jpg" alt="a very happy merchant" />
+                        </div>
+
                         <label class="input-label" for="title-input"> "Title" </label>
-                        <input class="input-box" type="text" on:input=move |event| 
+                        <input class="input-box" type="text" on:input=move |event|
                         {
                             set_title.set(event_target_value(&event));
                         }/>
                         
                         <label class="input-label" for="amount-input"> "Amount" </label>
-                        <input class="input-box" type="text" on:input=move |event| 
+                        <input class="input-box" type="text" on:input=move |event|
                         {
                             let val = event_target_value(&event).parse::<f64>();
                             set_amount.set(val.expect("Should be a valid value fr"));
@@ -61,24 +85,13 @@ fn App() -> impl IntoView
 
                 <section id="money-display">
                     <h1> "Budget Listed" </h1>
+
+                    <ListDisplay signal=budget.into()/>
+
                     <div id="total-banner">
                         <h2> "Total: ₱"{move || total_amount.get().abs()}</h2>
                     </div>
-                    <For
-                        each = move || budget.get()
-                        key = |budget| budget.id
-                        children = move |budget|
-                        {
-                            view!
-                            {
-                                <div class="block">
-                                    <p> {budget.title}":" </p>
-                                    <p>"₱"{budget.value} </p>
-                                </div>
 
-                            }
-                        }
-                    />
                 </section>
             </div>
         </main>
