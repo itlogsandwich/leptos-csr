@@ -11,9 +11,9 @@ pub struct Budget
 }
 
 #[component]
-fn ListDisplay(signal: Signal<Vec<Budget>>) -> impl IntoView
+fn ListDisplay(signal: RwSignal<Vec<Budget>>) -> impl IntoView
 {
-    let budget = signal;
+    let (budget, set_budget) = signal.split();
     view!
     {
         <For
@@ -25,7 +25,13 @@ fn ListDisplay(signal: Signal<Vec<Budget>>) -> impl IntoView
                 {
                     <div class="block">
                         <p> {budget.title} </p>
-                        <p>"₱"{budget.value} </p>
+                        <p>"₱"{budget.value} </p>  
+                        <button on:click=move |_|
+                        {
+                            set_budget.update(|val| val.retain(|x| x.id != budget.id));
+                        }
+                        > "Remove"
+                        </button>
                     </div>
                 }
             }
@@ -38,7 +44,10 @@ fn App() -> impl IntoView
 {
     let (title, set_title) = signal(String::new());
     let (amount, set_amount) = signal(0.0);
-    let (budget, set_budget) = signal(Vec::<Budget>::new());
+
+    let rw_signal = RwSignal::new(Vec::<Budget>::new());
+    let (budget, set_budget) = rw_signal.split();
+
     let (counter, set_counter) = signal(0);
 
     let total_amount = Memo::new(move |_|
@@ -86,7 +95,7 @@ fn App() -> impl IntoView
                 <section id="money-display">
                     <h1> "Budget Listed" </h1>
 
-                    <ListDisplay signal=budget.into()/>
+                    <ListDisplay signal=rw_signal/>
 
                     <div id="total-banner">
                         <h2> "Total: ₱"{move || total_amount.get().abs()}</h2>
