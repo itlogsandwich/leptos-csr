@@ -23,10 +23,12 @@ fn ListDisplay(signal: RwSignal<Vec<Budget>>) -> impl IntoView
             {
                 view!
                 {
-                    <div class="block">
-                        <p> {budget.title} </p>
-                        <p>"₱"{budget.value} </p>  
-                        <button on:click=move |_|
+                    <div id="list-div" style="display: flex; align-items: center; gap: 20px; width: 90%; max-width: 600px;">
+                        <div class="block">
+                            <p> {budget.title} </p>
+                            <p>"₱"{budget.value} </p>  
+                        </div>
+                        <button class="list-btn" on:click=move |_|
                         {
                             set_budget.update(|val| val.retain(|x| x.id != budget.id));
                         }
@@ -66,13 +68,13 @@ fn App() -> impl IntoView
                         </div>
 
                         <label class="input-label" for="title-input"> "Title" </label>
-                        <input class="input-box" type="text" on:input=move |event|
+                        <input class="input-box" type="text" prop:value=move || title.get() on:input=move |event|
                         {
                             set_title.set(event_target_value(&event));
                         }/>
                         
                         <label class="input-label" for="amount-input"> "Amount" </label>
-                        <input class="input-box" type="text" on:input=move |event|
+                        <input class="input-box" type="text" prop:value=move|| amount.get() on:input=move |event|
                         {
                             let val = event_target_value(&event).parse::<f64>();
                             set_amount.set(val.expect("Should be a valid value fr"));
@@ -86,6 +88,9 @@ fn App() -> impl IntoView
                                 title: title.get(),
                                 value: amount.get(),
                             });
+
+                            set_title.set(String::new());
+                            set_amount.set(0.0);
                         }>
                             "Add Budget"
                         </button>

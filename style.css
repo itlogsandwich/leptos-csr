@@ -124,6 +124,7 @@ body {
 
 .block {
   display: flex;
+  flex-grow: 1;
   justify-content: space-between;
   background-color: var(--card-color);
   align-items: center;
@@ -150,6 +151,23 @@ body {
   margin: 0;
 }
 
-.block button {
-  flex: none;
+.list-btn {
+  color: var(--text-color);
+  font-weight: bold;
+  width: 75px;
+  height: 25px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(148, 141,155,0.5);
+  transition: all 0.2s ease-in-out;
+  background-color: red;
+}
+
+.list-btn:hover {
+  outline: none;
+  color: white;
+  transform: scale(0.98);
+  border-color: #948D9B;
+  cursor: pointer;
+  background-color: rgba(255,0,0,0.8);
 }
