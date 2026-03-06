@@ -20,31 +20,98 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-} 
+}
+
 #input-card {
-  background-color:#B8BACD;
+  background-color: #948D9B;
   display: flex;
   flex-direction: column;
   width: 350px;
   height: 500px;
-  border-style: solid;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.5);
   border-width: soft;
   justify-content: center;
   align-items: center;
 }
+.input-label {
+  font-size: 14px; 
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #4a4a4a;
+  align-self: flex-start;
+  margin-left: 40px;
+  margin-bottom: 4px;
+}
+
+.input-box {
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 16px; 
+}
+
+.input-box:focus {
+  outline: none;
+  border-color: #948D9B;
+  box-shadow: 0 0 8px rgba(148, 141,155,0.5);
+  background-color: #ffffff;
+}
+
+#budget-btn {
+
+
+}
+
 #money-display {
   background-color: #798071;
   display: flex;
   flex: 3;
   flex-direction: column;
-  justify-content: center;
+  padding: 20px;
+  justify-content: start;
   align-items: center;
+  overflow-y: auto;
+}
+
+#total-banner {
+  position: sticky;
+  top: 0;
+  background-color: #798071;
+  padding: 20px;
+  z-index: 10;
+  border-bottom: 2px solid #5d6357;
+  width: 100%;
+  text-align: center;
 }
 
 .block {
-  border-style: solid;
-  border-width: medium;
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #8a9182;
+  align-items: center;
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid #5d6357;
+  border-radius: 10px;
+  padding: 15px 20px;
   margin: 4px;
   font-size: 25px;
+}
+
+.block p:first-child {
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+.block p:last-child {
+  font-weight: 500;
+  font-size: 18px;
+  color: #2e7d32;
+  margin: 0;
 }

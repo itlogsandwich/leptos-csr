@@ -32,19 +32,19 @@ fn App() -> impl IntoView
             <div id="main-body">
                 <section id="input-body" >
                     <div id="input-card">
-                        <label for="title-input"> "Title" </label>
-                        <input id="title-input" type="text" on:input=move |event| 
+                        <label class="input-label" for="title-input"> "Title" </label>
+                        <input class="input-box" type="text" on:input=move |event| 
                         {
                             set_title.set(event_target_value(&event));
                         }/>
                         
-                        <label for="amount-input"> "Amount" </label>
-                        <input id="amount-input" type="text" on:input=move |event| 
+                        <label class="input-label" for="amount-input"> "Amount" </label>
+                        <input class="input-box" type="text" on:input=move |event| 
                         {
                             let val = event_target_value(&event).parse::<f64>();
                             set_amount.set(val.expect("Should be a valid value fr"));
                         }/>
-                        <button style="margin: 4px;" on:click=move |_| 
+                        <button id="budget-btn" on:click=move |_| 
                         {
                             set_counter.set(counter.get() + 1);
                             set_budget.write().push(Budget
@@ -61,7 +61,9 @@ fn App() -> impl IntoView
 
                 <section id="money-display">
                     <h1> "Budget Listed" </h1>
-                    <h2> "Total: ₱"{move || total_amount.get().abs()}</h2>
+                    <div id="total-banner">
+                        <h2> "Total: ₱"{move || total_amount.get().abs()}</h2>
+                    </div>
                     <For
                         each = move || budget.get()
                         key = |budget| budget.id
@@ -70,7 +72,7 @@ fn App() -> impl IntoView
                             view!
                             {
                                 <div class="block">
-                                    <p> {budget.title} </p>
+                                    <p> {budget.title}":" </p>
                                     <p>"₱"{budget.value} </p>
                                 </div>
 
