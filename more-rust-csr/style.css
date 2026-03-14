@@ -1,0 +1,34 @@
+#container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.card { 
+  display: flex; 
+  width: 50vw;
+  height: 75vh;
+  flex-direction: column; 
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #3B47B3;
+  gap: 40px;
+}
+
+.btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  font-size: 25px;
+  font-style: bold;
+  border: none;
+}
+.btn:hover {
+  background-color: white;
+  transition: 1s ease-in-out;
+}

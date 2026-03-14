@@ -1,35 +1,41 @@
 use leptos::prelude::*;
-
-#[component]
-fn SideBar() -> impl IntoView
-{
-    view!
-    {
-        <div style="height: 100%; background-color: red;">
-            <h1> "This is the sidebar" </h1>
-        </div>
-    }
-}
+use std::time::Duration;
 
 #[component]
 fn App() -> impl IntoView
 {
-    let signal = RwSignal::<i32>::new(0);
-    let (count,set_count) = signal.split();
+    let timer_signal = RwSignal::<Option<IntervalHandle>>::new(None);
+    let (timer, set_timer) = timer_signal.split();
 
-    let container_style = "display: flex; height:100vh; background-color: green;";
-
+    let count_signal = RwSignal::<i32>::new(0);
+    let (count,set_count) = count_signal.split();
+    
+    let one_second = Duration::new(1, 0);
     view! 
     {
         <main>
-            <div style=container_style>
-                <SideBar />
-                <div style="width:100vw;">
-                    <h1> "Hello Motherfuckers!" </h1> 
-                    <div style="display: flex; flex-direction: column;">
-                        <button on:click=move |_| set_count.update(|x| *x +=1 ) > 
-                            "Click me you fucking cunt"
-                            <h1> {{count}} </h1>
+            <div id="container">
+                <div>
+                    <div class="card">
+                        <h1> {{count}} </h1>
+                        <button class="btn" on:click=move |_| 
+                        {
+                            if let Some(handler) = timer.get()
+                            {
+                                handler.clear();
+                                set_timer.set(None);
+                            }
+                            else
+                            { 
+                                if let Ok(h) = set_interval_with_handle(move ||set_count.update(|x| *x +=1 ), one_second)
+                                {
+                                    set_timer.set(Some(h));
+                                }
+                
+                            } 
+                        }
+                        > 
+                            "Start"
                         </button>
                     </div>
                 </div>
