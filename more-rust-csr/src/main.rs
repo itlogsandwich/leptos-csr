@@ -34,13 +34,15 @@ fn App() -> impl IntoView
             <div id="container">
                 <div>
                     <div class="card">
-                        <h1> "Pomodoro Clock It" </h1>
+                        <h1> "Clock It!" </h1>
                         <div id="clock">
                             <svg viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="black" stroke-width="4" stroke-dasharray="250" stroke-dashoffset=move|| clock_offset().to_string() fill="none"/>
+                                <circle cx="50" cy="50" r="40" stroke="#F57F40" stroke-width="4" stroke-dasharray="250" stroke-dashoffset=move|| clock_offset().to_string() fill="none" transform="rotate(-90 50 50)"/>
+                                <text stroke="white" fill="white" x="50" y="50" text-anchor="middle" dominant-baseline="middle">
+                                    {time_display}
+                                </text>
                             </svg>
                         </div>
-                        <h1> {{time_display}} </h1>
                         <div
                             style="display: flex; gap: 10px;"
                         >
