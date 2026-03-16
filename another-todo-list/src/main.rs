@@ -24,12 +24,11 @@ pub fn ListDisplay(list: ReadSignal<Vec<Todo>>) -> impl IntoView
 
                 view!
                 {
-
-                <div>
-                    <p>{list.title}</p>
-                    <p>{list.description}</p> 
-                    <p>{status}</p>
-                </div>
+                    <div class="list">
+                        <p>{list.title}</p>
+                        <p>{list.description}</p> 
+                        <p>{status}</p>
+                    </div>
                 }
             }
         />
@@ -62,31 +61,36 @@ pub fn App() -> impl IntoView
     {
         <main>
             <div class="container">
-                <div class="input-divs">
-                    <label for="title-input"> "What shall we do today?" </label>
-                    <input id="title-input" type="text" bind:value=(title, set_title)/>
-                </div>
-                <div class="input-divs">
-                    <label for="description-input"> "Add more details to it fr" </label>
-                    <input id="description-input" type="text" bind:value=(description, set_description)/>
-                </div>
-                <div>
-                    <button type="button"
-                    on:click=move |_| 
-                    {
-                        set_count.set(count.get() + 1);
-                        set_list.write().push(
-                        Todo
+                <div class="card">
+                    <div class="input-divs">
+                        <label for="title-input"> "What shall we do today?" </label>
+                        <input id="title-input" type="text" bind:value=(title, set_title)/>
+                    </div>
+                    <div class="input-divs">
+                        <label for="description-input"> "Add more details to it fr" </label>
+                        <input id="description-input" type="text" bind:value=(description, set_description)/>
+                    </div>
+                    <div>
+                        <button type="button"
+                        on:click=move |_| 
                         {
-                            id: count.get(),
-                            title: title.get(),
-                            description: description.get(),
-                            is_complete: false,
-                        });
-                    }
-                    > "Add Todo" </button>
+                            set_count.set(count.get() + 1);
+                            set_list.write().push(
+                            Todo
+                            {
+                                id: count.get(),
+                                title: title.get(),
+                                description: description.get(),
+                                is_complete: false,
+                            });
+                        }
+                        > "Add Todo" </button>
+                    </div>
                 </div>
-                <ListDisplay list=list/>
+                <div class="list-container">
+                    <ListDisplay list=list/>
+                </div>
+
             </div>
         </main>
     }

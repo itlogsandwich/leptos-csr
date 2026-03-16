@@ -1,10 +1,44 @@
 .container {
   display: flex;
+  background-color: yellow;
+  height: 100vh;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+}
+
+.card {
+  display: flex;
+  width: 100vh;
+  height: 25vh;
+  border-radius: 10px;
+  background-color: #95F9E3;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 10px 10px 5px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  overflow-y: auto;
 }
 
 .list {
-
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  gap: 2px;
+  border-radius: 10px;
 }
 
 .input-divs {
