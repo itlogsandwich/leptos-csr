@@ -1,0 +1,56 @@
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.add-container {
+  position: relative;
+  left: 85%;
+  transform: translateX(-50%);
+}
+
+#nav-bar {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  display: flex;
+}
+
+ul li A {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li A:hover {
+  background-color: #111111;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  width: 500px;
+  height: 500px;
+  border-style: solid;
+  border-radius: 10px;
+  box-shadow: 8px 6px 5px;
+  padding: 25px 25px;
+}

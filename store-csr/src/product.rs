@@ -1,9 +1,10 @@
+#[derive(Clone, Debug)]
 pub struct Product
 {
-    id: i64,
-    name: String,
-    description: String, 
-    price: f64,
+    pub id: i64,
+    pub name: String,
+    pub description: String, 
+    pub price: f64,
 }
 
 impl Product 
