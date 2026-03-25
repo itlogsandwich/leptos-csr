@@ -34,11 +34,15 @@ fn AddProduct(
     let (description, set_description) = description_signal.split();
     let (price, set_price) = price_signal.split();
 
-    let (products, set_products) = products_signal.split();
+    let set_products = products_signal.write_only();
 
     view!
     {
         <div class="card">
+            <div style="display: flex; flex-direction: row-reverse;" >
+                <A href="/products"> "Close" </A> 
+            </div>
+
             <label for="name-input">"Name"</label>
             <input class="input" name="name-input" type="text" bind:value=(name, set_name)/>
 
@@ -81,12 +85,13 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
          
         <h1> "Products" </h1>
         <A href="/products/create"> "+ Add Product" </A>
-            <table>
+            <table class="products-table">
                 <tr>
                     <th>"ID Number"</th>
                     <th>"Name" </th>
                     <th>"Description"</th>
                     <th>"Price"</th>
+                    <th> "Actions" </th>
                 </tr>
                 <For
                     each=move || products.get()
@@ -100,6 +105,19 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
                                 <td> {product.name}</td>
                                 <td> {product.description}</td>
                                 <td> "$"{product.price}</td>
+                                <td style="margin: 10px;">
+                                    <button>
+                                        "View"
+                                    </button>
+                                    <button>
+                                        "Edit"
+                                    </button>
+                                    <button class="btn" type="button" on:click=move|_|
+                                        remove_product(product.id, set_products)
+                                    >
+                                    "Remove"
+                                    </button>
+                                </td>
                             </tr>
                         }
                     }
