@@ -29,6 +29,78 @@ struct IdParams
 }
 
 #[component]
+fn ViewProduct(products: ReadSignal<Vec<Product>>) -> impl IntoView
+{
+
+    let params = use_params::<IdParams>();
+    
+    let product_id = move ||
+    {
+        params
+            .read()
+            .as_ref()
+            .ok()
+            .and_then(|params| params.id)
+            .unwrap_or_default()
+    };
+    
+
+    let product = move ||  products.get().into_iter().find(|p| p.id == product_id() as i64);
+
+    view!
+    {
+        <div class="card">
+            <div style="display: flex; flex-direction: row-reverse;" >
+                <A href="/products"> "Close" </A> 
+            </div>
+
+            {move || product().map(|p|
+            {
+                view! 
+                {
+                    <div class="details-div">
+                        <label>"Name:"</label>
+                        <label> {p.name} </label> 
+                    </div>
+
+                    <div class="details-div">
+                        <label> "Description:" </label>
+                        <label> {p.description} </label> 
+                    </div>
+
+                    <div class="details-div">
+                        <label> "Category:" </label>
+                        <label> {p.category} </label> 
+                    </div>
+
+                    <div class="details-div">
+                        <label> "Price" </label>
+                        <label> "$"{p.price} </label> 
+                    </div>
+
+                    <div style="display: flex; gap:20px; justify-content: space-evenly">
+                        <A href="/products/create">
+                            "Add Product"
+                        </A>
+                        <A href=format!("/products/edit/{}", p.id)>
+                            "Edit Product"
+                        </A>
+                    </div>
+                }
+            }.into_any())
+            .unwrap_or_else(|| 
+            view!
+            {
+                <div style="display:flex; justify-content: center; align-items: center;">
+                    <h1>"There has been an error viewing the product!"</h1>
+                </div>
+            }.into_any())}
+
+        </div>
+    }
+}
+
+#[component]
 fn UpdateProduct(
     name_signal: RwSignal<String>,
     description_signal: RwSignal<String>,
@@ -68,7 +140,7 @@ fn UpdateProduct(
             <label for="description-input"> "Description" </label>
             <input class="input" name="description-input" type="text" bind:value=(description, set_description)/>
 
-            <label for="category-select"> "Description" </label>
+            <label for="category-select"> "Category" </label>
             <select name="category-select" id="categories" bind:value=(category, set_category)>
                 <option value="Food & Beverage"> "Food & Beverage" </option>
                 <option value="Electronics"> "Electronics" </option>
@@ -209,8 +281,10 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
                         view!
                         {
                             <tr>
-                                {move || products.get().iter().find(|p| p.id == product.id).map(|p| {
-                                    view! {
+                                {move || products.get().iter().find(|p| p.id == product.id).map(|p| 
+                                {
+                                    view!
+                                    {
                                         <td>{p.id}</td>
                                         <td>{p.name.clone()}</td>
                                         <td>{p.description.clone()}</td>
@@ -219,10 +293,10 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
                                     }
                                 })}
                                 <td style="margin: 10px;">
-                                    <button>
+                                    <A href=format!("/products/view/{}", product.id)>
                                         "View"
-                                    </button>
-                                    <A href=format!("/products/{}",product.id)>
+                                    </A>
+                                    <A href=format!("/products/edit/{}",product.id)>
                                         "Edit"
                                     </A>
                                     <button class="btn" type="button" on:click=move|_|
@@ -305,15 +379,21 @@ fn App() -> impl IntoView
                             /> 
                         } 
                         />
-                        <Route path=path!(":id") view=move || view! 
+
+                        <Route path=path!("/view/:id") view=move || view!
+                        {
+                            <ViewProduct products=products_signal.read_only() />
+                        }
+                        /> 
+                        <Route path=path!("/edit/:id") view=move || view! 
                         { 
-                                <UpdateProduct 
-                                    name_signal=name_signal
-                                    description_signal=description_signal
-                                    category_signal=category_signal
-                                    price_signal=price_signal
-                                    products_signal=products_signal 
-                                /> 
+                            <UpdateProduct 
+                                name_signal=name_signal
+                                description_signal=description_signal
+                                category_signal=category_signal
+                                price_signal=price_signal
+                                products_signal=products_signal 
+                            /> 
                         }
                         />
                     </ParentRoute>
