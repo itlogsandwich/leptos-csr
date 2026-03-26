@@ -209,11 +209,15 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
                         view!
                         {
                             <tr>
-                                <td>{product.id}</td>
-                                <td> {product.name}</td>
-                                <td> {product.description}</td>
-                                <td> {product.category}</td>
-                                <td> "$"{product.price}</td>
+                                {move || products.get().iter().find(|p| p.id == product.id).map(|p| {
+                                    view! {
+                                        <td>{p.id}</td>
+                                        <td>{p.name.clone()}</td>
+                                        <td>{p.description.clone()}</td>
+                                        <td>{p.category.clone()}</td>
+                                        <td>{p.price}</td>
+                                    }
+                                })}
                                 <td style="margin: 10px;">
                                     <button>
                                         "View"
