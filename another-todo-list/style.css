@@ -11,7 +11,7 @@
 .card {
   display: flex;
   width: 100vh;
-  height: 25vh;
+  height: 20vh;
   border-radius: 10px;
   background-color: #95F9E3;
   flex-direction: column;
@@ -21,12 +21,23 @@
   box-shadow: 10px 10px 5px;
 }
 
+.input-divs{
+  text-align: center;
+  font-style: bold;
+}
+
+input {
+  width: 200px;
+  height: 25px;
+  border-radius: 10px;
+}
+
 .list-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
   overflow-y: auto;
+  gap: 20px;
 }
 
 .list {
@@ -37,7 +48,7 @@
   width: 200px;
   height: 200px;
   background-color: white;
-  gap: 2px;
+  gap: 5px;
   border-radius: 10px;
 }
 
