@@ -51,7 +51,9 @@ fn ViewProduct(products: ReadSignal<Vec<Product>>) -> impl IntoView
     {
         <div class="card">
             <div style="display: flex; flex-direction: row-reverse;" >
-                <A href="/products"> "Close" </A> 
+                <div class="a-divs">
+                    <A href="/products"> "Close" </A> 
+                </div>
             </div>
 
             {move || product().map(|p|
@@ -78,7 +80,7 @@ fn ViewProduct(products: ReadSignal<Vec<Product>>) -> impl IntoView
                         <label> "$"{p.price} </label> 
                     </div>
 
-                    <div style="display: flex; gap:20px; justify-content: space-evenly">
+                    <div class="a-divs" style="display: flex; gap:20px; justify-content: space-evenly">
                         <A href="/products/create">
                             "Add Product"
                         </A>
@@ -131,7 +133,9 @@ fn UpdateProduct(
     {
         <div class="card">
             <div style="display: flex; flex-direction: row-reverse;" >
-                <A href="/products"> "Close" </A> 
+                <div class="a-divs">
+                    <A href="/products"> "Close" </A>
+                </div>
             </div>
 
             <label for="name-input">"Name"</label>
@@ -206,7 +210,9 @@ fn AddProduct(
     {
         <div class="card">
             <div style="display: flex; flex-direction: row-reverse;" >
-                <A href="/products"> "Close" </A> 
+                <div class="a-divs">
+                    <A href="/products"> "Close" </A>
+                </div>
             </div>
 
             <label for="name-input">"Name"</label>
@@ -263,7 +269,9 @@ fn ListDisplay(products_signal: RwSignal<Vec<Product>>) -> impl IntoView
         <div class="main-container">
          
         <h1> "Products" </h1>
-        <A href="/products/create"> "+ Add Product" </A>
+            <div class="a-divs">
+                <A href="/products/create"> "+ Add Product" </A>
+            </div>
             <table class="products-table">
                 <tr>
                     <th>"ID Number"</th>
@@ -324,15 +332,18 @@ fn Home() -> impl IntoView
     view!
     {
         <div class="home-container">
+            <div style="position: absolute; top:50px; left: 15px;">
+                <h1> "Store Manager" </h1> 
+            </div>
             <A href="/">
-                <div class="card">
+                <div class="home-card">
                     <label>
                         {labels[0]}
                     </label>
                 </div>
             </A>
             <A href="/products">
-                <div class="card">
+                <div class="home-card">
                     <label>
                         {labels[1]}
                     </label>

@@ -11,6 +11,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .add-container {
@@ -28,6 +29,17 @@
 th, td {
   padding: 15px;
   text-align: center;
+}
+
+td > A {
+  color: black;
+  background-color: rgba(240,240,240);
+  border-radius: 10px;
+  margin-bottom: 4px;
+  padding: 15px; 25px;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.2s ease-in-out;
 }
 
 #nav-bar {
@@ -66,6 +78,51 @@ ul li A:hover {
   border-radius: 10px;
   box-shadow: 8px 6px 5px;
   padding: 25px 25px;
+}
+
+.home-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 100px;
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.home-card:hover {
+  background-color: rgba(240,240,240, 0.5);  
+}
+
+.home-container > A:link, .home-container > A:visited {
+  color: black;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.2s ease-in-out;
+}
+
+
+.home-container > A:hover, .home-container > A:active {
+  color: rbga(240,240,240, 0.5);
+}
+
+.a-divs > A {
+  color: black;
+  background-color: rgba(240,240,240);
+  border-radius: 10px;
+  margin-bottom: 4px;
+  padding: 15px; 25px;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.2s ease-in-out;
+}
+
+.a-divs > A:hover { 
+  background-color: rgba(200,200,200);
 }
 
 .details-div {
